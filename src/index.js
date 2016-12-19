@@ -4,6 +4,8 @@
 const fs = require('fs');
 const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/slots';
 const analogPath = '/sys/bus/iio/devices/iio\:device0/';
+import Analog from './analog';
+import {pins} from './const';
 
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     require('child_process').exec(loadAnalogTreeCmd, function () {
@@ -13,21 +15,27 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     init();
 }
 
-function init () {
-    console.log('watching');
+let a = new Analog(pins.ain1);
+a.on('change', mV => {
+    let celsius = (mV - 500) / 10;
+    let fahrenheit = (celsius * 9 / 5) + 32;
+});
+
+// function init () {
+//     console.log('watching');
     
-    function pullVal () {
-        fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
-            let adcVal = Number(chunk);
-            let mV = adcVal / 4096 * 1800;
-            let celsius = (mV - 500) / 10;
-            let fahrenheit = (celsius * 9 / 5) + 32;
-            console.log(adcVal, fahrenheit);
-            setTimeout(pullVal, 1000);
-        });
-    }
-    pullVal();
-}
+//     function pullVal () {
+//         fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
+//             let adcVal = Number(chunk);
+//             let mV = adcVal / 4096 * 1800;
+//             let celsius = (mV - 500) / 10;
+//             let fahrenheit = (celsius * 9 / 5) + 32;
+//             console.log(adcVal, fahrenheit);
+//             setTimeout(pullVal, 1000);
+//         });
+//     }
+//     pullVal();
+// }
 
 
 
