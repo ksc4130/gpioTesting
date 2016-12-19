@@ -7,16 +7,17 @@ const analogPath = '/sys/bus/iio/devices/iio\:device0/';
 
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     require('child_process').exec(loadAnalogTreeCmd, function () {
-        pullVal();
+        init();
     });
 } else {
-    pullVal();
+    init();
 }
 
-function pullVal () {
+function init () {
     console.log('watching');
     
-    fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
+    function pullVal () {
+        fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
         let adcVal = Number(chunk);
         let mV = adcVal / 4096 * 1800;
         let celsius = (mV - 500) / 10;
@@ -24,6 +25,7 @@ function pullVal () {
         console.log(adcVal, fahrenheit);
         setTimeout(pullVal, 1000);
     });
+    }
 }
 
 
