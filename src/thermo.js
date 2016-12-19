@@ -17,6 +17,7 @@ class thermo extends EventEmitter {
 
         this.highThreshold = config.highThreshold || 4;
 
+        this.checkLow = this.checkLow.bind(this);
         this.pinChangeHandler = this.pinChangeHandler.bind(this);
         this.analog.on('change', this.pinChangeHandler);
     }

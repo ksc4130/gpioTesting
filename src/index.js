@@ -43,7 +43,6 @@ function init () {
         lowThreshold: 1
     });
     t.on('change', fahrenheit => {
-        
         console.log(`fahrenheit: ${fahrenheit}`);
     });
 }
