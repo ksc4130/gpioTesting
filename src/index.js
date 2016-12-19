@@ -9,6 +9,9 @@ import Analog from './analog';
 import Thermo from './thermo';
 import {pins} from './const';
 
+var gpio = require("gpio"),
+    led = 0;
+
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     require('child_process').exec(loadAnalogTreeCmd, function () {
         init();
@@ -44,9 +47,6 @@ function init () {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
 }
-
-var gpio = require("gpio"),
-    led = 0;
 
 var gpio68 = gpio.export(68, {
     direction: 'in',
