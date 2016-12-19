@@ -30,11 +30,14 @@ class analog extends EventEmitter {
 
     calcCurrentAverage () {
         let total = this.readings.reduce((a, b) => a+b, 0);
-        console.log(total);
-        this.millivolts = total / this.sampleSize;
+        let calc = (total / this.sampleSize).toFixed(2);
+        if(this.millivolts != calc) {
+            this.millivolts = calc;
+            this.emit('change', this.millivolts);
+        }
         this.readings.length = 0;
         this.readings = [];
-        this.emit('change', this.millivolts);
+        
   }
 
   read () {
@@ -45,7 +48,7 @@ class analog extends EventEmitter {
           return;
       }
 
-      fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
+      fs.readFile(analogPath + 'in_voltage1_raw', 'UTf-8', (err, chunk) => {
             let adcVal = Number(chunk);
             let mV = adcVal / 4096 * 1800;
             this.addReading(mV);
@@ -57,7 +60,7 @@ class analog extends EventEmitter {
 
   addReading(millivolts) {
     this.readings.push(millivolts);
-    let forDrops = this.dropHighAndLow ? 2 : 0
+    let forDrops = this.dropHighAndLow ? 2 : 0;
     if(this.readings.length === this.sampleSize + forDrops) {
       if(this.dropHighAndLow) {
         this.readings = this.readings.sort((a, b) => a-b)

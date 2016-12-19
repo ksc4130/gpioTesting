@@ -4,6 +4,7 @@
 const fs = require('fs');
 const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/slots';
 const analogPath = '/sys/bus/iio/devices/iio\:device0/';
+const gpioPath = '/sys/class/gpio/';//54
 import Analog from './analog';
 import {pins} from './const';
 
@@ -21,6 +22,29 @@ function init () {
         let celsius = (mV - 500) / 10;
         let fahrenheit = (celsius * 9 / 5) + 32;
         console.log(`fahrenheit: ${fahrenheit}`);
+    });
+}
+
+fs.exists(gpioPath + 'gpio54', exists => {
+    if(exists) {
+        fs.writeFile(gpioPath + 'unexport', '54', err => {
+            if(err)
+                return console.log(err);
+             exportGpio(54);   
+        });
+    }
+});
+
+
+
+function exportGpio (n) {
+    fs.writeFile(gpioPath + 'export', '54', err => {
+        if(err)
+            return console.log(err);
+        fs.writeFile(gpioPath + 'gpio' + n + '/value', '1', err => {
+            if(err)
+                return console.log('write failed', err);
+        });
     });
 }
 
