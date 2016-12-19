@@ -23,7 +23,7 @@ class thermo extends EventEmitter {
 
     pinChangeHandler (mV) {
         let celsius = (mV - 500) / 10;
-        let fahrenheit = (celsius * 9 / 5) + 32;
+        let fahrenheit = ((celsius * 9 / 5) + 32).toFixed(2);
 
         if(fahrenheit != this. fahrenheit) {
             this.fahrenheit = fahrenheit;

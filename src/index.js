@@ -6,6 +6,7 @@ const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/sl
 const analogPath = '/sys/bus/iio/devices/iio\:device0/';
 const gpioPath = '/sys/class/gpio/';//54
 import Analog from './analog';
+import Thermo from './thermo';
 import {pins} from './const';
 
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
@@ -18,9 +19,9 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 
 function init () {
     let a = new Analog(pins.ain1);
-    a.on('change', mV => {
-        let celsius = (mV - 500) / 10;
-        let fahrenheit = (celsius * 9 / 5) + 32;
+    let t = new Thermo(a);
+    t.on('change', fahrenheit => {
+        
         console.log(`fahrenheit: ${fahrenheit}`);
     });
 }
@@ -32,6 +33,8 @@ fs.exists(gpioPath + 'gpio54', exists => {
                 return console.log(err);
              exportGpio(54);   
         });
+    } else {
+        exportGpio(54); 
     }
 });
 
