@@ -14,11 +14,20 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 }
 
 function pullVal () {
-    let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
-    let mV = adcVal / 4096 * 1800;
-    let celsius = (mV - 500) / 10;
-    let fahrenheit = (celsius * 9 / 5) + 32;
-    console.log(adcVal, fahrenheit);
+    fs.watchFile(analogPath + 'in_voltage1_raw', (curr, prev) => {
+        console.log(`the current mtime is: ${curr.mtime}`);
+        console.log(`the previous mtime was: ${prev.mtime}`);
+        let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+        let mV = adcVal / 4096 * 1800;
+        let celsius = (mV - 500) / 10;
+        let fahrenheit = (celsius * 9 / 5) + 32;
+        console.log(adcVal, fahrenheit);
+    });
+    // let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+    // let mV = adcVal / 4096 * 1800;
+    // let celsius = (mV - 500) / 10;
+    // let fahrenheit = (celsius * 9 / 5) + 32;
+    // console.log(adcVal, fahrenheit);
 }
 
 
