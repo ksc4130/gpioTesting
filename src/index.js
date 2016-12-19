@@ -14,6 +14,7 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 }
 
 function pullVal () {
+    console.log('watching');
     fs.watchFile(analogPath + 'in_voltage1_raw', (curr, prev) => {
         console.log(`the current mtime is: ${curr.mtime}`);
         console.log(`the previous mtime was: ${prev.mtime}`);
