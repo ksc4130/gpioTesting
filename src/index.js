@@ -18,14 +18,15 @@ function init () {
     
     function pullVal () {
         fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
-        let adcVal = Number(chunk);
-        let mV = adcVal / 4096 * 1800;
-        let celsius = (mV - 500) / 10;
-        let fahrenheit = (celsius * 9 / 5) + 32;
-        console.log(adcVal, fahrenheit);
-        setTimeout(pullVal, 1000);
-    });
+            let adcVal = Number(chunk);
+            let mV = adcVal / 4096 * 1800;
+            let celsius = (mV - 500) / 10;
+            let fahrenheit = (celsius * 9 / 5) + 32;
+            console.log(adcVal, fahrenheit);
+            setTimeout(pullVal, 1000);
+        });
     }
+    pullVal();
 }
 
 
