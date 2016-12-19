@@ -39,7 +39,7 @@ function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
         whenLow: [gpio67],
-        target: 75,
+        target: 77,
         lowThreshold: 1
     });
     t.on('change', fahrenheit => {
