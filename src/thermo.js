@@ -37,6 +37,8 @@ class thermo extends EventEmitter {
                 this.isLow = false;
                 this.whenLow.forEach(dig => dig.set(0));
             }
+        } else if (this.fahrenheit <= this.target - this.lowThreshold) {
+            this.whenLow.forEach(dig => dig.set(1));
         }
     }
 

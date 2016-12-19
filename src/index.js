@@ -17,9 +17,28 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     init();
 }
 
+var gpio67 = gpio.export(67, {
+   direction: 'out',
+   interval: 200,
+   ready: function() {
+    //    gpio68.on('change', function (val) {
+    //        console.log('btn changed', val);
+    //        if(val === 0) {
+    //            led = 1 - led;
+    //            gpio4.set(led);
+    //        }
+    //    });
+       
+   }
+});
+
 function init () {
     let a = new Analog(pins.ain1);
-    let t = new Thermo(a);
+    let t = new Thermo(a, {
+        whenLow: [gpio67],
+        target: 75,
+        lowThreshold: 1
+    });
     t.on('change', fahrenheit => {
         
         console.log(`fahrenheit: ${fahrenheit}`);
@@ -36,30 +55,7 @@ var gpio68 = gpio.export(68, {
     }
 });
 
-// Calling export with a pin number will export that header and return a gpio header instance
-var gpio4 = gpio.export(67, {
-   // When you export a pin, the default direction is out. This allows you to set
-   // the pin value to either LOW or HIGH (3.3V) from your program.
-   direction: 'out',
 
-   // set the time interval (ms) between each read when watching for value changes
-   // note: this is default to 100, setting value too low will cause high CPU usage
-   interval: 200,
-
-   // Due to the asynchronous nature of exporting a header, you may not be able to
-   // read or write to the header right away. Place your logic in this ready
-   // function to guarantee everything will get fired properly
-   ready: function() {
-       gpio68.on('change', function (val) {
-           console.log('btn changed', val);
-           if(val === 0) {
-               led = 1 - led;
-               gpio4.set(led);
-           }
-       });
-       
-   }
-});
 
 // fs.exists(gpioPath + 'gpio54', exists => {
 //     if(exists) {
