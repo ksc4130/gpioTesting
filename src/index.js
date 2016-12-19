@@ -29,7 +29,7 @@ function init () {
 var gpio = require("gpio");
 
 // Calling export with a pin number will export that header and return a gpio header instance
-var gpio4 = gpio.export(53, {
+var gpio4 = gpio.export(67, {
    // When you export a pin, the default direction is out. This allows you to set
    // the pin value to either LOW or HIGH (3.3V) from your program.
    direction: 'out',
