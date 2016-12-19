@@ -15,11 +15,13 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     init();
 }
 
-let a = new Analog(pins.ain1);
-a.on('change', mV => {
-    let celsius = (mV - 500) / 10;
-    let fahrenheit = (celsius * 9 / 5) + 32;
-});
+function init () {
+    let a = new Analog(pins.ain1);
+    a.on('change', mV => {
+        let celsius = (mV - 500) / 10;
+        let fahrenheit = (celsius * 9 / 5) + 32;
+    });
+}
 
 // function init () {
 //     console.log('watching');
