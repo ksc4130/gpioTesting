@@ -2,7 +2,7 @@ import {EventEmitter} from 'events';
 import Analog from './analog';
 
 class thermo extends EventEmitter {
-    constructor  (analog, config) {
+    constructor  (analog, config = {}) {
         super();
         this.analog = analog;
         this.fahrenheit = 0;
