@@ -12,14 +12,6 @@ import {pins} from './const';
 var gpio = require("gpio"),
     led = 0;
 
-if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
-    require('child_process').exec(loadAnalogTreeCmd, function () {
-        init();
-    });
-} else {
-    init();
-}
-
 var gpio67 = gpio.export(67, {
    direction: 'out',
    interval: 200,
@@ -35,7 +27,13 @@ var gpio67 = gpio.export(67, {
    }
 });
 
-console.log('in index', gpio67);
+if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
+    require('child_process').exec(loadAnalogTreeCmd, function () {
+        init();
+    });
+} else {
+    init();
+}
 
 function init () {
     let a = new Analog(pins.ain1);
