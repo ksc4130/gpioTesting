@@ -30,9 +30,10 @@ var gpio = require("gpio"),
     led = 0;
 
 var gpio68 = gpio.export(68, {
-   ready: function() {
-      
-   }
+    direction: 'in',
+    ready: function() {
+        
+    }
 });
 
 // Calling export with a pin number will export that header and return a gpio header instance
