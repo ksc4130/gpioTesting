@@ -5,14 +5,23 @@ const fs = require('fs');
 const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/slots';
 const analogPath = '/sys/bus/iio/devices/iio\:device0/';
 
-if(!fs.existsSync(analogPath + 'in_voltage1_raw'))
-    require('child_process').execSync(loadAnalogTreeCmd);
+if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
+    require('child_process').exec(loadAnalogTreeCmd, function () {
+        pullVal();
+    });
+} else {
+    pullVal();
+}
 
-let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
-let mV = adcVal / 4096 * 1800;
-let celsius = (mV - 500) / 10;
-let fahrenheit = (celsius * 9 / 5) + 32;
-console.log(adcVal, fahrenheit);
+function pullVal () {
+    let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+    let mV = adcVal / 4096 * 1800;
+    let celsius = (mV - 500) / 10;
+    let fahrenheit = (celsius * 9 / 5) + 32;
+    console.log(adcVal, fahrenheit);
+}
+
+
 
 // const exec = require('child_process').exec;
 // const child = exec(`echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots`,
