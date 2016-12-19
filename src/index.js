@@ -2,19 +2,28 @@
 //const exec = require('child_process').exec;
 //exec('echo "hello"');
 const fs = require('fs');
+const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/slots';
+const analogPath = '/sys/bus/iio/devices/iio\:device0/';
 
-//console.log(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+if(!fs.existsSync(analogPath))
+    require('child_process').execSync(loadAnalogTreeCmd);
 
-const exec = require('child_process').exec;
-const child = exec(`echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots`,
-    (error, stdout, stderr) => {
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
-        if (error !== null) {
-            console.log(`exec error: ${error}`);
-        }
-        console.log(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
-});
+let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+let mV = adc / 4096 * 1800;
+let celsius = (mV - 500) / 10;
+let fahrenheit = (celsius * 9 / 5) + 32;
+console.log(adcVal, fahrenheit);
+
+// const exec = require('child_process').exec;
+// const child = exec(`echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots`,
+//     (error, stdout, stderr) => {
+//         console.log(`stdout: ${stdout}`);
+//         console.log(`stderr: ${stderr}`);
+//         if (error !== null) {
+//             console.log(`exec error: ${error}`);
+//         }
+        //console.log(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
+// });
 // var gpio = require('gpio');
 
 // var gpio22, gpio21, intervalTimer;
