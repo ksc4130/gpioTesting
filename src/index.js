@@ -3,7 +3,7 @@
 //exec('echo "hello"');
 const fs = require('fs');
 const exec = require('child_process').exec;
-const child = exec(`sudo sh -c "echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots"`,
+const child = exec(`sh -c "echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots"`,
     (error, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
