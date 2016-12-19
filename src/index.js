@@ -26,7 +26,14 @@ function init () {
     });
 }
 
-var gpio = require("gpio");
+var gpio = require("gpio"),
+    led = 0;
+
+var gpio68 = gpio.export(68, {
+   ready: function() {
+      
+   }
+});
 
 // Calling export with a pin number will export that header and return a gpio header instance
 var gpio4 = gpio.export(67, {
@@ -42,7 +49,14 @@ var gpio4 = gpio.export(67, {
    // read or write to the header right away. Place your logic in this ready
    // function to guarantee everything will get fired properly
    ready: function() {
-       gpio4.set();
+       gpio68.on('change', function (val) {
+           console.log('btn changed', val);
+           if(val === 0) {
+               led = 1 - led;
+               gpio4.set(led);
+           }
+       });
+       
    }
 });
 
