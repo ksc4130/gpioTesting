@@ -10,7 +10,7 @@ const child = exec(`echo 'BB-ADC' > /sys/devices/platform/bone_capemgr/slots`,
         if (error !== null) {
             console.log(`exec error: ${error}`);
         }
-        console.log(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage0_raw'));
+        console.log(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage0_raw') + '');
 });
 // var gpio = require('gpio');
 
