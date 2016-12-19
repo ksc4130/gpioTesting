@@ -5,11 +5,11 @@ const fs = require('fs');
 const loadAnalogTreeCmd = 'echo "BB-ADC" > /sys/devices/platform/bone_capemgr/slots';
 const analogPath = '/sys/bus/iio/devices/iio\:device0/';
 
-if(!fs.existsSync(analogPath))
+if(!fs.existsSync(analogPath + 'in_voltage1_raw'))
     require('child_process').execSync(loadAnalogTreeCmd);
 
 let adcVal = Number(fs.readFileSync('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw') + '');
-let mV = adc / 4096 * 1800;
+let mV = adcVal / 4096 * 1800;
 let celsius = (mV - 500) / 10;
 let fahrenheit = (celsius * 9 / 5) + 32;
 console.log(adcVal, fahrenheit);
