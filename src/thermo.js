@@ -42,3 +42,5 @@ class thermo extends EventEmitter {
 
 
 }
+
+export default thermo;
