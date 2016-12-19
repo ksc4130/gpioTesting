@@ -7,7 +7,7 @@ class analog extends EventEmitter {
         super();
         this.pin = pin;
         this.curVal = 0;
-        this.samples = [];
+        this.readings = [];
         this.sampleSize = config.sampleSize || 10;
         this.sampleRate = config.sampeRate || 100;
 
