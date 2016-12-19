@@ -6,8 +6,9 @@ class thermo extends EventEmitter {
         super();
         this.analog = analog;
         this.fahrenheit = 0;
-
+        console.log(config.whenLow);
         this.whenLow = config.whenLow || [];
+        console.log(this.whenLow)
         this.target = config.target || 60;
         this.lowThreshold = config.lowThreshold || 4;
         this.lowKillThreshold = config.lowKillThreshold || 20;
