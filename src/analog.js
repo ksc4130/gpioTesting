@@ -1,5 +1,6 @@
 import {pins, analogPath} from './const';
 import {EventEmitter} from 'events';
+import fs from 'fs';
 
 class analog extends EventEmitter {
     constructor (pin, config = {}) {
