@@ -80,3 +80,5 @@ class analog extends EventEmitter {
     }
   }
 }
+
+export default analog;
