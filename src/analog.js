@@ -6,29 +6,15 @@ class analog extends EventEmitter {
     constructor (pin, config = {}) {
         super();
         this.pin = pin;
-        this.curVal = 0;
+        this.millivolts = 0;
         this.readings = [];
         this.sampleSize = config.sampleSize || 10;
         this.sampleRate = config.sampeRate || 100;
+        this.shouldStop = false;
+        this.running = false;
+        this.dropHighAndLow = true;
 
         this.start();
-    }
-
-
-     init () {
-        console.log('watching');
-        
-        function pullVal () {
-            fs.readFile(analogPath + 'in_voltage1_raw', (err, chunk) => {
-                let adcVal = Number(chunk);
-                let mV = adcVal / 4096 * 1800;
-                let celsius = (mV - 500) / 10;
-                let fahrenheit = (celsius * 9 / 5) + 32;
-                console.log(adcVal, fahrenheit);
-                setTimeout(pullVal, 1000);
-            });
-        }
-        pullVal();
     }
 
     start () {
@@ -44,10 +30,11 @@ class analog extends EventEmitter {
 
     calcCurrentAverage () {
         let total = this.readings.reduce((a, b) => a+b, 0);
+        console.log(total);
         this.millivolts = total / this.sampleSize;
         this.readings.length = 0;
         this.readings = [];
-        this.emit('change', this);
+        this.emit('change', this.millivolts);
   }
 
   read () {
