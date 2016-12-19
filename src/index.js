@@ -43,10 +43,10 @@ fs.exists(gpioPath + 'gpio54', exists => {
 function exportGpio (n) {
     fs.writeFile(gpioPath + 'export', '54', err => {
         if(err)
-            return console.log(err);
+            return console.log('export error', err);
         fs.writeFile(gpioPath + 'gpio' + n + '/direction', 'out', err => {
             if(err)
-                return console.log('write failed', err);
+                return console.log('direction eroor', err);
             fs.writeFile(gpioPath + 'gpio' + n + '/value', '1', err => {
                 if(err)
                     return console.log('write failed', err);
