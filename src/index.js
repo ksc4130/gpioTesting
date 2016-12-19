@@ -44,9 +44,13 @@ function exportGpio (n) {
     fs.writeFile(gpioPath + 'export', '54', err => {
         if(err)
             return console.log(err);
-        fs.writeFile(gpioPath + 'gpio' + n + '/value', '1', err => {
+        fs.writeFile(gpioPath + 'gpio' + n + '/direction', 'out', err => {
             if(err)
                 return console.log('write failed', err);
+            fs.writeFile(gpioPath + 'gpio' + n + '/value', '1', err => {
+                if(err)
+                    return console.log('write failed', err);
+        });
         });
     });
 }
