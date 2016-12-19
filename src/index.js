@@ -35,6 +35,8 @@ var gpio67 = gpio.export(67, {
    }
 });
 
+console.log('in index', gpio67);
+
 function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
