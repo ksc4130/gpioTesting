@@ -60,6 +60,7 @@ class thermo extends EventEmitter {
         if(this.fahrenheit > this.target) {
             console.log('not low');
             if(this.isLow) {
+                this.lowNeverKill = false;
                 this.isLow = false;
                 this.whenLow.forEach(dig => dig.set(0));
             }
