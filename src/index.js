@@ -28,6 +28,9 @@ var gpio67 = gpio.export(67, {
    }
 });
 
+
+var unkillBtn = new Button(68);
+
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     require('child_process').exec(loadAnalogTreeCmd, function () {
         init();
@@ -35,8 +38,6 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 } else {
     init();
 }
-
-var unkillBtn = new Button(68);
 
 function init () {
     let a = new Analog(pins.ain1);
