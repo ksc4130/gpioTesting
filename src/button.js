@@ -18,3 +18,5 @@ class button extends EventEmitter {
         this.gpio = gpio;
     }
 }
+
+export default button;
