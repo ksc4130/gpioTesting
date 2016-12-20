@@ -38,8 +38,6 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 
 let unkillBtn = new Button(68);
 
-unkillBtn.on('click', () => console.log('unkillBtn'));
-
 function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
