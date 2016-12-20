@@ -13,6 +13,11 @@ class onoff extends EventEmitter {
             }
         });
         this.gpio = gpioLoc;
+
+        this.set = this.set.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.on = this.on.bind(this);
+        this.off = this.off.bind(this);
     }
     set (value) {
         if(typeof value !== 'undefined') {
