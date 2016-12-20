@@ -34,7 +34,7 @@ function init () {
         whenLow: [fan],
         target: 78,
         lowThreshold: 1,
-        lowKillThreshold: 2,
+        lowKillThreshold: 1.5,
         toggleKill: toggleKillBtn
     });
     t.on('fahrenheit', fahrenheit => {
