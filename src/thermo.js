@@ -11,7 +11,7 @@ class thermo extends EventEmitter {
         this.target = config.target || 60;
         this.lowThreshold = config.lowThreshold || 4;
         this.lowKillThreshold = config.lowKillThreshold || 20;
-        this.lowNeverKill = config.lowNeverKill;
+        this.lowNeverKill = config.lowNeverKill || false;
         this.isLow = false;
         this.isLowKilled = false;
 
@@ -30,7 +30,9 @@ class thermo extends EventEmitter {
     }
 
     unkill () {
+        console.log('unkill', this.lowNeverKill);
         this.lowNeverKill = true;
+        console.log('unkill', this.lowNeverKill);
         this.isLowKilled = false;
         this.checkLow();
     }
