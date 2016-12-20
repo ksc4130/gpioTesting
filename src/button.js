@@ -12,7 +12,7 @@ class button extends EventEmitter {
                     if(val === 0) {
                         self.emit('click');
                     }
-                })
+                });
             }
         });
         this.gpio = gpioLoc;

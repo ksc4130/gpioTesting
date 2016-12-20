@@ -27,7 +27,7 @@ class thermo extends EventEmitter {
         this.analog.on('change', this.pinChangeHandler);
 
         if(config.toggleKill) {
-            config.toggleKill.on('click', this.unkill);
+            config.toggleKill.on('click', this.toggleKill);
         }
     }
 
