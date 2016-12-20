@@ -36,7 +36,7 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     init();
 }
 
-let unkillBtn = new Button(68);
+var unkillBtn = new Button(68);
 
 function init () {
     let a = new Analog(pins.ain1);
