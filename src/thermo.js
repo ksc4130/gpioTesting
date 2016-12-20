@@ -24,6 +24,7 @@ class thermo extends EventEmitter {
 
         this.analog.on('change', this.pinChangeHandler);
 
+        console.log('unkill val', config.unkill);
         if(config.unkill) {
             console.log('has unkill');
             config.unkill.on('click', this.unkill);
