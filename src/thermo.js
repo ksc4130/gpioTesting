@@ -69,7 +69,7 @@ class thermo extends EventEmitter {
     }
 
     checkLow () {
-        //console.log(`check low lowNeverKill: ${this.lowNeverKill}, isLow: ${this.isLow}, isLowKilled: ${this.isLowKilled}`);
+        console.log(`check low lowNeverKill: ${this.lowNeverKill}, isLow: ${this.isLow}, isLowKilled: ${this.isLowKilled}`);
         if(this.fahrenheit > this.target) {
             if(this.isLow) {
                 this.setLowNeverKill(false);
