@@ -41,8 +41,13 @@ function init () {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
     t.on('isLowKilled', value => {
+        if(value) {
+            isLowKilledIndicator.on();
+        } else {
+            isLowKilledIndicator.off();
+        }
         console.log('isLowKilled changed', value);
-        isLowKilledIndicator.set(value);
+        //isLowKilledIndicator.set(value);
     });
 }
 
