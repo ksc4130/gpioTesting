@@ -42,6 +42,7 @@ function init () {
         whenLow: [gpio67],
         target: 77,
         lowThreshold: 1,
+        lowKillThreshold: 1,
         unkill: new Button(68)
     });
     t.on('change', fahrenheit => {
