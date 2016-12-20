@@ -50,7 +50,7 @@ class thermo extends EventEmitter {
         if(!this.lowNeverKill && this.isLowKilled) {
            this.setIsLowKilled(false); 
         }
-        this.setLowNeverKill(this.lowNeverKill);
+        this.setLowNeverKill(!this.lowNeverKill);
 
         this.checkLow();
     }
