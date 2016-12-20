@@ -5,17 +5,17 @@ class button extends EventEmitter {
     constructor (pin) {
         super();
         let self = this;
-        let gpio = gpio.export(pin, {
+        let gpioLoc = gpio.export(pin, {
             direction: 'in',
             ready: function() {
-                gpio.on('change', val => {
+                gpioLoc.on('change', val => {
                     if(val === 0) {
                         self.emit('click');
                     }
                 })
             }
         });
-        this.gpio = gpio;
+        this.gpio = gpioLoc;
     }
 }
 
