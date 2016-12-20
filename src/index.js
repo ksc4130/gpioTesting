@@ -9,27 +9,16 @@ import Analog from './analog';
 import Thermo from './thermo';
 import {pins} from './const';
 import Button from './button';
+import Onoff from './onoff';
 
 var gpio = require("gpio"),
     led = 0;
 
-var gpio67 = gpio.export(67, {
-   direction: 'out',
-   interval: 200,
-   ready: function() {
-    //    gpio68.on('change', function (val) {
-    //        console.log('btn changed', val);
-    //        if(val === 0) {
-    //            led = 1 - led;
-    //            gpio4.set(led);
-    //        }
-    //    });
-       
-   }
-});
+var fan = new Onoff(67); 
+var isLowKilledIndicator = new Onoff(44);
 
 
-var unkillBtn = new Button(68);
+var toggleKillBtn = new Button(68);
 
 if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     require('child_process').exec(loadAnalogTreeCmd, function () {
@@ -42,15 +31,16 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
 function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
-        whenLow: [gpio67],
+        whenLow: [fan],
         target: 78,
         lowThreshold: 1,
-        lowKillThreshold: 1,
-        unkill: unkillBtn
+        lowKillThreshold: 2,
+        toggleKill: toggleKillBtn
     });
-    t.on('change', fahrenheit => {
+    t.on('fahrenheit', fahrenheit => {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
+    t.on('isLowKilled', isLow => isLowKilledIndicator.set);
 }
 
 // var gpio68 = gpio.export(68, {
