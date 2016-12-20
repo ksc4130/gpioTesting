@@ -36,6 +36,10 @@ if(!fs.existsSync(analogPath + 'in_voltage1_raw')) {
     init();
 }
 
+let unkillBtn = new Button(68);
+
+unkillBtn.on('click', () => console.log('unkillBtn'));
+
 function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
@@ -43,7 +47,7 @@ function init () {
         target: 77,
         lowThreshold: 1,
         lowKillThreshold: 1,
-        unkill: new Button(68)
+        unkill: unkillBtn
     });
     t.on('change', fahrenheit => {
         console.log(`fahrenheit: ${fahrenheit}`);
