@@ -22,13 +22,13 @@ class onoff extends EventEmitter {
     set (value) {
         if(typeof value !== 'undefined') {
             value = value ? 1 : 0;
-        } else {
-            value = this.value;
-        }
-        if(this.value !== value) {
-            this.value = value;
-            this.gpio.set(this.value);
-        }
+            if(this.value !== value) {
+                this.value = value;
+            }
+        } 
+
+        this.gpio.set(this.value);
+        
     }
 
     toggle () {
