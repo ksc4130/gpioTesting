@@ -43,7 +43,7 @@ function init () {
     let a = new Analog(pins.ain1);
     let t = new Thermo(a, {
         whenLow: [gpio67],
-        target: 77,
+        target: 78,
         lowThreshold: 1,
         lowKillThreshold: 1,
         unkill: unkillBtn
