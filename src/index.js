@@ -16,6 +16,7 @@ var gpio = require("gpio"),
 
 var fan = new Onoff(67); 
 var isLowKilledIndicator = new Onoff(44);
+var lowNeverKillIndicator = new Onoff(26);
 
 
 var toggleKillBtn = new Button(68);
@@ -40,15 +41,8 @@ function init () {
     t.on('fahrenheit', fahrenheit => {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
-    t.on('isLowKilled', value => {
-        if(value) {
-            isLowKilledIndicator.on();
-        } else {
-            isLowKilledIndicator.off();
-        }
-        console.log('isLowKilled changed', value);
-        //isLowKilledIndicator.set(value);
-    });
+    t.on('isLowKilled', isLowKilledIndicator.set);
+    t.on('lowNeverKill', lowNeverKillIndicator.set);
 }
 
 // var gpio68 = gpio.export(68, {
