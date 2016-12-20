@@ -34,7 +34,6 @@ class thermo extends EventEmitter {
     }
 
     unkill () {
-        console.log('called unkill');
         this.lowNeverKill = true;
         this.isLowKilled = false;
         this.checkLow();
@@ -64,7 +63,7 @@ class thermo extends EventEmitter {
             }
         } else if(!this.lowNeverKill && this.isLowKilled ) {
             return;
-        } else if(this.fahrenheit <= this.target - this.lowKillThreshold) {
+        } else if(!this.lowNeverKill && this.fahrenheit <= this.target - this.lowKillThreshold) {
             this.isLowKilled = true;
             this.isLow = true;
         } else if(this.fahrenheit <= this.target - this.lowThreshold) {
