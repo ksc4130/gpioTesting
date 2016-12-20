@@ -8,6 +8,7 @@ const gpioPath = '/sys/class/gpio/';//54
 import Analog from './analog';
 import Thermo from './thermo';
 import {pins} from './const';
+import Button from './button';
 
 var gpio = require("gpio"),
     led = 0;
@@ -40,19 +41,20 @@ function init () {
     let t = new Thermo(a, {
         whenLow: [gpio67],
         target: 77,
-        lowThreshold: 1
+        lowThreshold: 1,
+        unkill: new Button(68)
     });
     t.on('change', fahrenheit => {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
 }
 
-var gpio68 = gpio.export(68, {
-    direction: 'in',
-    ready: function() {
+// var gpio68 = gpio.export(68, {
+//     direction: 'in',
+//     ready: function() {
         
-    }
-});
+//     }
+// });
 
 
 

@@ -6,7 +6,7 @@ class thermo extends EventEmitter {
         super();
         this.analog = analog;
         this.fahrenheit = 0;
-        
+
         this.whenLow = config.whenLow || [];
         this.target = config.target || 60;
         this.lowThreshold = config.lowThreshold || 4;
@@ -17,9 +17,30 @@ class thermo extends EventEmitter {
 
         this.highThreshold = config.highThreshold || 4;
 
+        this.unkill = this.unkill.bind(this);
+        this.neverKill = this.neverKill.bind(this);
         this.checkLow = this.checkLow.bind(this);
         this.pinChangeHandler = this.pinChangeHandler.bind(this);
+
         this.analog.on('change', this.pinChangeHandler);
+
+        if(config.unkill) {
+            config.unkill.on('click', () => this.unkill);
+        }
+
+        if(config.neverKill) {
+            config.neverKill.on('click', () => this.neverKill);
+        }
+    }
+
+    unkill () {
+        this.lowNeverKill = true;
+        this.isLowKilled = false;
+    }
+
+    neverKill () {
+        this.lowNeverKill = true;
+        this.isLowKilled = false;
     }
 
     pinChangeHandler (mV) {
@@ -39,7 +60,12 @@ class thermo extends EventEmitter {
                 this.isLow = false;
                 this.whenLow.forEach(dig => dig.set(0));
             }
-        } else if (this.fahrenheit <= this.target - this.lowThreshold) {
+        } else if(!this.lowNeverKill && this.isLowKilled ) {
+            return;
+        } else if(this.fahrenheit <= this.target - this.lowKillThreshold) {
+            this.isLowKilled = true;
+            this.isLow = true;
+        } else if(this.fahrenheit <= this.target - this.lowThreshold) {
             this.isLow = true;
             this.whenLow.forEach(dig => dig.set(1));
         }
