@@ -11,6 +11,7 @@ class button extends EventEmitter {
                 gpioLoc.on('change', val => {
                     console.log('button', val);
                     if(val === 0) {
+                        console.log('val 0');
                         self.emit('click');
                     }
                 })

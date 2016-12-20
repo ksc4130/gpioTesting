@@ -34,8 +34,10 @@ class thermo extends EventEmitter {
     }
 
     unkill () {
+        console.log('called unkill');
         this.lowNeverKill = true;
         this.isLowKilled = false;
+        this.checkLow();
     }
 
     neverKill () {
