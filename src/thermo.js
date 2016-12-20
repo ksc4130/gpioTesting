@@ -74,9 +74,10 @@ class thermo extends EventEmitter {
             if(this.isLow) {
                 this.setLowNeverKill(false);
                 this.setIsLow(false);
+                this.setIsLowKilled(true);
                 this.whenLow.forEach(dig => dig.off());
             }
-        } else if(!this.lowNeverKill && this.isLowKilled ) {
+        } else if(!this.lowNeverKill && this.isLowKilled) {
             if(this.isLow) {
                 this.setLowNeverKill(false);
                 this.setIsLow(false);
