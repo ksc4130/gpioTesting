@@ -40,7 +40,7 @@ function init () {
     t.on('fahrenheit', fahrenheit => {
         console.log(`fahrenheit: ${fahrenheit}`);
     });
-    t.on('isLowKilled', isLowKilledIndicator.set);
+    t.on('isLowKilled', value => isLowKilledIndicator.set(value));
 }
 
 // var gpio68 = gpio.export(68, {
